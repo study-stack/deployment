@@ -25,4 +25,10 @@ services:
     depends_on:
       - eureka-server
       - config-server
-
+  gateway-zuul:
+    image: eu.gcr.io/stdstack/gateway-zuul:0.1
+    container_name: stdstack-gateway-zuul
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-server
