@@ -1,0 +1,41 @@
+version: "3.5"
+services:
+  eureka-server:
+    image: eu.gcr.io/stdstack/eureka-server:0.1
+    container_name: stdstack-eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+      - stdstack
+  config-server:
+    image: eu.gcr.io/stdstack/config-server:0.1
+    container_name: stdstack-config-server
+    ports:
+      - "9000:9000"
+    depends_on:
+      - eureka-server
+    networks:
+      - app-network
+      - stdstack
+  auth-server:
+    image: eu.gcr.io/stdstack/auth-server:0.1
+    container_name: stdstack-auth-server
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - app-network
+      - stdstack
+
+networks:
+  app-network:
+    driver: bridge
+  stdstack:
+    name: stdstack
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
