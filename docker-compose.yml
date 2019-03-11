@@ -39,3 +39,10 @@ services:
     depends_on:
       - auth-server
       - course-service
+  stdstack-front:
+    image: eu.gcr.io/stdstack/stack-frontend:0.1
+    container_name: stdstack-front
+    ports:
+      - "8081:8080"
+    depends_on:
+      - gateway-zuul
