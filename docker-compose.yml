@@ -25,6 +25,12 @@ services:
     depends_on:
       - eureka-server
       - config-server
+  course-service:
+    image: eu.gcr.io/stdstack/course-service:0.1
+    container_name: stdstack-course-service
+    depends_on:
+      - eureka-server
+      - config-server
   gateway-zuul:
     image: eu.gcr.io/stdstack/gateway-zuul:0.1
     container_name: stdstack-gateway-zuul
@@ -32,3 +38,4 @@ services:
       - "8080:8080"
     depends_on:
       - auth-server
+      - course-service
